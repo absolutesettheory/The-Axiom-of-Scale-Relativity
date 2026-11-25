@@ -1,35 +1,3 @@
-name: Python CI
-
-on:
-  push:
-  pull_request:
-  workflow_dispatch:
-
-permissions:
-  contents: read
-
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Compile Python files
-        run: python -m compileall -q .
-
-      - name: Run bridge examples
-        run: |
-          for script in scale_relativity_*_bridge.py; do
-            echo "Running $script"
-            python "$script"
-          done
 name: Logic and Algorithm Research Workflow
 
 on:
