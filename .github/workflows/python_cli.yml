@@ -30,3 +30,40 @@ jobs:
             echo "Running $script"
             python "$script"
           done
+name: Logic and Algorithm Research Workflow
+
+on:
+  schedule:
+    - cron: "0 14 * * *" # Runs once daily at 14:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  research-cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run logic and algorithm verification suite
+        env:
+          PYTHONPATH: .
+        run: |
+          pytest -q
+
+      - name: Stamp research metadata
+        run: |
+          python3 -c '
+          from datetime import datetime, timezone
+          ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          print(f"Author: Christopher Thomas Ronio | Timestamp: {ts}")
+          '
