@@ -5,7 +5,9 @@ on:
     - cron: "0 14 * * *" # Runs once daily at 14:00 UTC
   workflow_dispatch:
 
-permissions:
+python -m pip install pytest
+
+python -m pytest -q:
   contents: write
   pull-requests: write
 
